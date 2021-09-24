@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="WEBTECLATModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TBCategory">
+          <Key>
+            <PropertyRef Name="idCategory" />
+          </Key>
+          <Property Name="idCategory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nameCategory" Type="nchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TBProduct">
+          <Key>
+            <PropertyRef Name="idProduct" />
+          </Key>
+          <Property Name="idProduct" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nameProduct" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="priceProduct" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="imageProduct" Type="image" />
+          <Property Name="descriptopnProduct" Type="nchar" MaxLength="100" />
+          <Property Name="amountProduct" Type="int" Nullable="false" />
+          <Property Name="createdDateProduct" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="idCategoryProduct" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_TBProduct_TBCategory">
+          <End Role="TBCategory" Type="Self.TBCategory" Multiplicity="1" />
+          <End Role="TBProduct" Type="Self.TBProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBCategory">
+              <PropertyRef Name="idCategory" />
+            </Principal>
+            <Dependent Role="TBProduct">
+              <PropertyRef Name="idCategoryProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SP_CONSULT_PRODUCT_DATA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PRODUCT_NAME" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="WEBTECLATModelStoreContainer">
+          <EntitySet Name="TBCategory" EntityType="Self.TBCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBProduct" EntityType="Self.TBProduct" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TBProduct_TBCategory" Association="Self.FK_TBProduct_TBCategory">
+            <End Role="TBCategory" EntitySet="TBCategory" />
+            <End Role="TBProduct" EntitySet="TBProduct" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WEBTECLATModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TBCategory">
+          <Key>
+            <PropertyRef Name="idCategory" />
+          </Key>
+          <Property Name="idCategory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameCategory" Type="String" MaxLength="60" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TBProducts" Relationship="Self.FK_TBProduct_TBCategory" FromRole="TBCategory" ToRole="TBProduct" />
+        </EntityType>
+        <EntityType Name="TBProduct">
+          <Key>
+            <PropertyRef Name="idProduct" />
+          </Key>
+          <Property Name="idProduct" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameProduct" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="priceProduct" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="imageProduct" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="descriptopnProduct" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="amountProduct" Type="Int32" Nullable="false" />
+          <Property Name="createdDateProduct" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="idCategoryProduct" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TBCategory" Relationship="Self.FK_TBProduct_TBCategory" FromRole="TBProduct" ToRole="TBCategory" />
+        </EntityType>
+        <Association Name="FK_TBProduct_TBCategory">
+          <End Role="TBCategory" Type="Self.TBCategory" Multiplicity="1" />
+          <End Role="TBProduct" Type="Self.TBProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBCategory">
+              <PropertyRef Name="idCategory" />
+            </Principal>
+            <Dependent Role="TBProduct">
+              <PropertyRef Name="idCategoryProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WEBTECLATEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TBCategories" EntityType="Self.TBCategory" />
+          <EntitySet Name="TBProducts" EntityType="Self.TBProduct" />
+          <AssociationSet Name="FK_TBProduct_TBCategory" Association="Self.FK_TBProduct_TBCategory">
+            <End Role="TBCategory" EntitySet="TBCategories" />
+            <End Role="TBProduct" EntitySet="TBProducts" />
+          </AssociationSet>
+          <FunctionImport Name="SP_CONSULT_PRODUCT_DATA" ReturnType="Collection(WEBTECLATModel.SP_CONSULT_PRODUCT_DATA_Result)">
+            <Parameter Name="PRODUCT_NAME" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_CONSULT_PRODUCT_DATA_Result">
+          <Property Type="Int32" Name="idProduct" Nullable="false" />
+          <Property Type="String" Name="nameCategory" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="nameProduct" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="amountProduct" Nullable="false" />
+          <Property Type="Decimal" Name="priceProduct" Nullable="false" Precision="18" Scale="2" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WEBTECLATModelStoreContainer" CdmEntityContainer="WEBTECLATEntities">
+          <EntitySetMapping Name="TBCategories">
+            <EntityTypeMapping TypeName="WEBTECLATModel.TBCategory">
+              <MappingFragment StoreEntitySet="TBCategory">
+                <ScalarProperty Name="idCategory" ColumnName="idCategory" />
+                <ScalarProperty Name="nameCategory" ColumnName="nameCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBProducts">
+            <EntityTypeMapping TypeName="WEBTECLATModel.TBProduct">
+              <MappingFragment StoreEntitySet="TBProduct">
+                <ScalarProperty Name="idProduct" ColumnName="idProduct" />
+                <ScalarProperty Name="nameProduct" ColumnName="nameProduct" />
+                <ScalarProperty Name="priceProduct" ColumnName="priceProduct" />
+                <ScalarProperty Name="imageProduct" ColumnName="imageProduct" />
+                <ScalarProperty Name="descriptopnProduct" ColumnName="descriptopnProduct" />
+                <ScalarProperty Name="amountProduct" ColumnName="amountProduct" />
+                <ScalarProperty Name="createdDateProduct" ColumnName="createdDateProduct" />
+                <ScalarProperty Name="idCategoryProduct" ColumnName="idCategoryProduct" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_CONSULT_PRODUCT_DATA" FunctionName="WEBTECLATModel.Store.SP_CONSULT_PRODUCT_DATA">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WEBTECLATModel.SP_CONSULT_PRODUCT_DATA_Result">
+                <ScalarProperty Name="idProduct" ColumnName="idProduct" />
+                <ScalarProperty Name="nameCategory" ColumnName="nameCategory" />
+                <ScalarProperty Name="nameProduct" ColumnName="nameProduct" />
+                <ScalarProperty Name="amountProduct" ColumnName="amountProduct" />
+                <ScalarProperty Name="priceProduct" ColumnName="priceProduct" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

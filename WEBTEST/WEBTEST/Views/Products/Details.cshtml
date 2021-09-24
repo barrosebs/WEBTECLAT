@@ -1,0 +1,74 @@
+﻿@model WEBTEST.Infra.EF.TBProduct
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TBProduct</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nameProduct)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nameProduct)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.priceProduct)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.priceProduct)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.imageProduct)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.imageProduct)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descriptopnProduct)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descriptopnProduct)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.amountProduct)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.amountProduct)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.createdDateProduct)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.createdDateProduct)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TBCategory.nameCategory)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TBCategory.nameCategory)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idProduct }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,26 @@
+﻿@model WEBTEST.Infra.EF.TBCategory
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TBCategory</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nameCategory)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nameCategory)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idCategory }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
